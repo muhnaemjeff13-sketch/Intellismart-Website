@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   keywords: ["Intellismart", "HRDotNet", "SIMSDotNet", "BooksDotNet", "CashBoxDotNet", "business software", "systems integration"],
   openGraph: { title, description, type: "website", siteName: companyName, ...(siteUrl && { url: siteUrl, images: ["/media/connected-business.webp"] }) },
   twitter: { card: "summary_large_image", title, description, ...(siteUrl && { images: ["/media/connected-business.webp"] }) },
-  icons: { icon: "/icon.svg" },
+  icons: { icon: { url: "/intellismart-icon.png", type: "image/png", sizes: "64x64" } },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

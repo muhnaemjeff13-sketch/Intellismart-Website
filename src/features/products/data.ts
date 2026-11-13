@@ -36,6 +36,15 @@ export const cashBoxOverview = {
   height: 617,
 };
 
+export const booksOverview = {
+  href: "/solutions/booksdotnet",
+  heroId: "books-hero",
+  preview: "/media/solutions/booksdotnet/dashboard.webp",
+  previewAlt: "BooksDotNet dashboard with financial totals, revenue versus expenses, and an expense breakdown",
+  width: 1586,
+  height: 491,
+};
+
 export const products = [
   {
     "id": "hr-core",
@@ -287,8 +296,8 @@ export const products = [
         "Keep accounting records in view."
       ],
       [
-        "Journal Entries",
-        "Organize your accounting entries."
+        "Journal Vouchers",
+        "Create vouchers and review posting status."
       ],
       [
         "Accounts Receivable",
