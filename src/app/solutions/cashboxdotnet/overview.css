@@ -1,0 +1,50 @@
+.cashbox-approval-preview {
+  width: min(100%, 460px);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid #cfdae6;
+  border-radius: 14px;
+  background: #fff;
+  color: #202e3e;
+}
+
+.cashbox-approval-copy {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 18px 20px 14px;
+  text-align: center;
+}
+
+.cashbox-approval-copy svg { color: #2569ab; }
+.cashbox-approval-copy strong { font-size: 1.125rem; }
+
+.cashbox-approval-copy p {
+  margin: 0;
+  color: #4b5e73;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.cashbox-approval-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid #e1e7ee;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.cashbox-approval-actions span {
+  padding: 6px 10px;
+  border: 1px solid #cfdae6;
+  border-radius: 6px;
+}
+
+.cashbox-approval-actions span:last-child {
+  border-color: #2569ab;
+  background: #2569ab;
+  color: #fff;
+}

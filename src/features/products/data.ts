@@ -1,3 +1,41 @@
+export const hrCoreOverview = {
+  href: "/solutions/hrdotnet-core",
+  heroId: "hr-core-hero",
+  preview: "/media/solutions/hrdotnet-core/preview-sharp.webp",
+  previewAlt: "HRDotNet Core dashboard showing leave balances and the start of its attendance charts",
+  width: 802,
+  height: 422,
+};
+
+export const hrMobileOverview = {
+  href: "/solutions/hrdotnet-mobile",
+  heroId: "hr-mobile-hero",
+};
+
+export const hrMobileScreens = {
+  clockIn: { src: "/media/solutions/clock-in-clear.webp", alt: "HRDotNet Mobile home screen with the assigned schedule, attendance status, and Clock In button" },
+  gps: { src: "/media/solutions/gps-confirmation-clear.webp", alt: "HRDotNet Mobile clock-in confirmation with captured GPS location on a map" },
+  payslip: { src: "/media/solutions/payslip-clear.webp", alt: "HRDotNet Mobile latest payslip with the cutoff period, net pay, and pay date" },
+};
+
+export const hrRecruitmentOverview = {
+  href: "/solutions/hrdotnet-recruitment",
+  heroId: "hr-recruitment-hero",
+  preview: "/media/solutions/hrdotnet-recruitment/recruitment-charts.webp",
+  previewAlt: "Recruitment Funnel, Source Efficiency, and Offer Acceptance Rate charts",
+  width: 1632,
+  height: 722,
+};
+
+export const cashBoxOverview = {
+  href: "/solutions/cashboxdotnet",
+  heroId: "cashbox-hero",
+  preview: "/media/solutions/cashboxdotnet/cash-overview.webp",
+  previewAlt: "CashBoxDotNet dashboard showing recorded cash, cash movement, and expenses by category",
+  width: 1572,
+  height: 617,
+};
+
 export const products = [
   {
     "id": "hr-core",

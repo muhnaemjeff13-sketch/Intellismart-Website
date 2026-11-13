@@ -1,16 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { products } from "./data";
+import { cashBoxOverview, hrCoreOverview, hrMobileOverview, hrMobileScreens, hrRecruitmentOverview, products } from "./data";
 
 type Product = (typeof products)[number];
 
-const mobileScreens = [
-  { file: "gps-confirmation", label: "GPS clock-in confirmation" },
-  { file: "clock-in", label: "Clock-in home screen" },
-  { file: "payslip", label: "Latest payslip" },
-];
+const mobileScreens = [hrMobileScreens.gps, hrMobileScreens.clockIn, hrMobileScreens.payslip];
 
 const projectFamilies = [
   { name: "HRDotNet", first: "hr-core" },
@@ -27,41 +24,46 @@ function getFamilyIndex(productIndex: number) {
 }
 
 function screenshot(product: Product) {
-  if (product.id === "hr-mobile") return "/media/solutions/clock-in.webp";
-  if (product.id === "hr-analytics") return "/media/solutions/analytics-workforce.webp";
-  return "/media/hero/" + product.id + ".webp";
+  if (product.id === "hr-analytics") return "/media/solutions/analytics-workforce-clear.webp";
+  return "/media/hero/" + product.id + "-clear.webp";
 }
 
-const screenshotHeights: Record<string, number> = {
-  "hr-core": 810,
-  "hr-recruitment": 722,
-  "hr-performance": 815,
-  "hr-ai": 773,
-  sims: 689,
-  books: 727,
-  cashbox: 715,
+const screenshotDimensions: Record<string, readonly [number, number]> = {
+  "hr-performance": [1440, 815],
+  "hr-ai": [1600, 859],
+  sims: [1920, 918],
+  books: [1900, 959],
+  "hr-analytics": [1600, 765],
 };
 
-function ProjectPreview({ product, desktop = false }: { product: Product; desktop?: boolean }) {
+function ProjectPreview({ product, desktop = false, active = true }: { product: Product; desktop?: boolean; active?: boolean }) {
+  const dashboardOverview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : undefined;
   const isMobile = product.id === "hr-mobile";
   const isAnalytics = product.id === "hr-analytics";
-  const width = isAnalytics ? 1600 : 1440;
-  const height = isAnalytics ? 765 : screenshotHeights[product.id];
-  const ratio = width / height;
+  const [width, height] = dashboardOverview
+    ? [dashboardOverview.width, dashboardOverview.height]
+    : screenshotDimensions[product.id] ?? [802, 422];
 
   return (
     <figure className={desktop ? "solution-preview solution-preview--sticky" : "solution-preview solution-preview--inline"}>
-      {isMobile ? (
-        <div className="solution-iphone-trio">
-          {mobileScreens.map(({ file, label }) => (
-            <div className="solution-iphone" key={file}>
-              <Image src={"/media/solutions/" + file + ".webp"} alt={"HRDotNet Mobile: " + label}
+      {dashboardOverview ? (
+        <Link href={dashboardOverview.href + "#" + dashboardOverview.heroId} aria-label={"Explore the " + product.name + " product overview"}
+          tabIndex={active ? 0 : -1} className="solution-browser solution-core-preview">
+          <Image src={dashboardOverview.preview} alt={dashboardOverview.previewAlt} width={width} height={height}
+            sizes="(min-width: 900px) 700px, 92vw" unoptimized />
+        </Link>
+      ) : isMobile ? (
+        <Link href={hrMobileOverview.href + "#" + hrMobileOverview.heroId}
+          aria-label="Explore the HRDotNet Mobile product overview" tabIndex={active ? 0 : -1} className="solution-iphone-trio">
+          {mobileScreens.map(({ src, alt }) => (
+            <div className="solution-iphone" key={src}>
+              <Image src={src} alt={alt}
                 width={720} height={1600} sizes="(min-width: 900px) 210px, 35vw" unoptimized />
             </div>
           ))}
-        </div>
+        </Link>
       ) : (
-        <div className="solution-browser" style={{ "--solution-preview-ratio": ratio } as CSSProperties}>
+        <div className="solution-browser" style={{ "--solution-preview-ratio": width / height } as CSSProperties}>
           <div className="solution-browser-bar" aria-hidden="true">
             <span className="solution-browser-dots" />
             <span className="solution-browser-name">{product.name}</span>
@@ -258,28 +260,37 @@ export function ProductExplorer() {
       <div className="solution-scroll-blur" aria-hidden="true"><span /><span /><span /></div>
       <div className="solution-catalog">
         <div className="solution-projects" ref={list}>
-          {products.map((product, index) => (
-            <article key={product.id} id={"solution-" + product.id} className="solution-project" tabIndex={-1} data-focused={index === active} aria-labelledby={"title-" + product.id}>
-              <ProjectPreview product={product} />
-              {index === 0 && <ProjectIndex active={activeFamily} inline />}
-              <div className="solution-copy">
-                <p className="solution-project-meta">
-                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  {product.pillar}
-                </p>
-                <h3 id={"title-" + product.id}>{product.name}</h3>
-                <p className="solution-project-title">{product.title}</p>
-                <p className="solution-project-description">{product.description}</p>
-                <ul className="solution-highlights" aria-label="Key capabilities">
-                  {product.highlights.slice(0, 3).map(([title]) => <li key={title}>{title}</li>)}
-                </ul>
-                <a className="solution-preview-link" href={screenshot(product)} target="_blank" rel="noreferrer"
-                  aria-label={"View " + product.name + " screenshot (opens in a new tab)"}>
-                  View screenshot <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </article>
-          ))}
+          {products.map((product, index) => {
+            const overview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-mobile" ? hrMobileOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : undefined;
+            return (
+              <article key={product.id} id={"solution-" + product.id} className="solution-project" tabIndex={-1} data-focused={index === active} aria-labelledby={"title-" + product.id}>
+                <ProjectPreview product={product} />
+                {index === 0 && <ProjectIndex active={activeFamily} inline />}
+                <div className="solution-copy">
+                  <p className="solution-project-meta">
+                    <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                    {product.pillar}
+                  </p>
+                  <h3 id={"title-" + product.id}>{product.name}</h3>
+                  <p className="solution-project-title">{product.title}</p>
+                  <p className="solution-project-description">{product.description}</p>
+                  <ul className="solution-highlights" aria-label="Key capabilities">
+                    {product.highlights.slice(0, 3).map(([title]) => <li key={title}>{title}</li>)}
+                  </ul>
+                  {overview ? (
+                    <Link className="solution-preview-link" href={overview.href + "#" + overview.heroId}>
+                      Explore {product.name} <span aria-hidden="true">↗</span>
+                    </Link>
+                  ) : (
+                    <a className="solution-preview-link" href={screenshot(product)} target="_blank" rel="noreferrer"
+                    aria-label={"View " + product.name + " screenshot (opens in a new tab)"}>
+                    View screenshot <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
         <div className="solution-preview-column">
           <div className="solution-preview-stage">
@@ -287,7 +298,7 @@ export function ProductExplorer() {
               <div className="solution-preview-stack">
                 {products.map((product, index) => (
                   <div key={product.id} className="solution-preview-layer" data-current={index === active} aria-hidden={index !== active}>
-                    <ProjectPreview product={product} desktop />
+                    <ProjectPreview product={product} desktop active={index === active} />
                   </div>
                 ))}
               </div>

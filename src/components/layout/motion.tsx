@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
 
 const preference = "(prefers-reduced-motion: reduce)";
 function subscribe(callback: () => void) {
@@ -41,22 +41,47 @@ export function useCarousel(length: number, interval: number) {
   return { index, setIndex, move, setPaused, setHovered, frame };
 }
 
-export function Reveal({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
+export function AnimatedContent({
+  as: Tag = "div",
+  children,
+  className,
+  delay = 0,
+  id,
+  tabIndex,
+  trigger = "scroll",
+}: {
+  as?: "div" | "li" | "main";
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  id?: string;
+  tabIndex?: number;
+  trigger?: "mount" | "scroll";
+}) {
+  const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   useEffect(() => {
-    if (reduced || !ref.current) return;
     const node = ref.current;
+    if (trigger !== "scroll" || reduced || !node || !("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      node.animate([
-        { opacity: .45, transform: "translateY(16px)", filter: "blur(3px)" },
-        { opacity: 1, transform: "none", filter: "none" },
-      ], { duration: 440, easing: "cubic-bezier(.22,.8,.25,1)" });
+      if (!entry.isIntersecting || entry.intersectionRatio < .12) return;
+      node.dataset.animatedContent = "enter";
       observer.disconnect();
-    }, { threshold: .14 });
+    }, { threshold: .12 });
     observer.observe(node);
     return () => observer.disconnect();
-  }, [reduced]);
-  return <div ref={ref}>{children}</div>;
+  }, [reduced, trigger]);
+
+  return (
+    <Tag
+      ref={(node: HTMLElement | null) => { ref.current = node; }}
+      id={id}
+      tabIndex={tabIndex}
+      className={className}
+      data-animated-content={trigger === "mount" ? "mount" : undefined}
+      style={delay ? { "--content-enter-delay": `${delay}ms` } as CSSProperties : undefined}
+    >
+      {children}
+    </Tag>
+  );
 }

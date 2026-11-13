@@ -7,15 +7,15 @@ export function StickyHeader({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let frame = 0;
-    const reasons = document.getElementById("why-us");
+    const gradientEnd = document.getElementById("why-us") ?? document.querySelector("[data-overview-gradient-end]");
 
     function update() {
       frame = 0;
       const y = window.scrollY;
       const viewport = window.innerHeight;
-      const reasonsTop = reasons ? reasons.getBoundingClientRect().top + y : viewport;
-      const start = Math.max(0, reasonsTop - viewport * .85);
-      const end = Math.max(start + 1, reasonsTop - 80);
+      const gradientEndTop = gradientEnd ? gradientEnd.getBoundingClientRect().top + y : viewport;
+      const start = Math.max(0, gradientEndTop - viewport * .85);
+      const end = Math.max(start + 1, gradientEndTop - 80);
       const progress = Math.min(1, Math.max(0, (y - start) / (end - start)));
       const fade = progress * progress * (3 - 2 * progress);
       document.body.style.setProperty("--opening-gradient-opacity", (1 - fade).toFixed(4));

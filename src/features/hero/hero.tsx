@@ -4,7 +4,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCarousel, useReducedMotion } from "@/components/layout/motion";
-import { products } from "@/features/products/data";
+import { cashBoxOverview, hrCoreOverview, hrRecruitmentOverview, products } from "@/features/products/data";
 
 const overviewHeadline = "Software Shaped Around your Business";
 const peopleHeadline = "Simplify HR, Timekeeping and Payroll";
@@ -37,7 +37,9 @@ function Headline({ title, visibleCount, reduced }: { title: string; visibleCoun
                     <span className="headline-word">
                       <span className="headline-measure">{word}</span>
                       {headline === title && visibleCount >= offset && <span className="headline-ink">
-                        {word.slice(0, visibleCount - offset)}
+                        {index === 0 ? (
+                          <span className="hero-title-gradient">{word.slice(0, visibleCount - offset)}</span>
+                        ) : word.slice(0, visibleCount - offset)}
                         {!reduced && visibleCount <= offset + word.length && <span className="type-caret" />}
                       </span>}
                     </span>
@@ -97,7 +99,11 @@ export function Hero() {
             <a className="button button-secondary" href="#services">Technology services</a>
           </div>
         </div>
-        <div className="preview-carousel" ref={carousel.frame} role="group" aria-label="Product previews">
+        <div className="preview-carousel" ref={carousel.frame} role="group" aria-label="Product previews"
+          onFocusCapture={() => carousel.setPaused(true)}
+          onBlurCapture={event => {
+            if (!event.currentTarget.contains(event.relatedTarget)) carousel.setPaused(false);
+          }}>
           <div className="preview-track"
             onPointerEnter={event => { if (event.pointerType === "mouse") carousel.setHovered(true); }}
             onPointerLeave={() => carousel.setHovered(false)}>
@@ -106,11 +112,19 @@ export function Hero() {
               const middle = Math.floor(count / 2);
               const offset = (index - previewIndex + middle + count) % count - middle;
               const depth = Math.abs(offset);
+              const overview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : undefined;
               return (
                 <div className="preview-slide" key={product.id} data-depth={depth} aria-hidden={depth > 0}
-                  style={{ "--slide-offset": offset } as CSSProperties}>
-                  <Image src={"/media/hero/" + product.id + ".webp"} alt={product.name + ": " + product.image.description} fill unoptimized
-                    loading={index < 2 ? "eager" : "lazy"} />
+                  style={{ "--slide-offset": offset,
+                    "--preview-aspect-ratio": overview ? overview.width / overview.height : undefined,
+                  } as CSSProperties}>
+                  {overview ? (
+                    <Image src={overview.preview} alt={overview.previewAlt} fill unoptimized
+                      loading={index < 2 ? "eager" : "lazy"} />
+                  ) : (
+                    <Image src={"/media/hero/" + product.id + "-clear.webp"} alt={product.name + ": " + product.image.description} fill unoptimized
+                      loading={index < 2 ? "eager" : "lazy"} />
+                  )}
                 </div>
               );
             })}

@@ -36,7 +36,7 @@ export const company = {
     "Collaboration",
     "Customer Focus",
     "Loyalty"
-  ],
+  ] as const,
   "reasons": [
     [
       "Solutions built around your processes",

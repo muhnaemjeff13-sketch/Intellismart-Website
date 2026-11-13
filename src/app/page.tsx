@@ -1,7 +1,6 @@
 import { SiteFooter, SiteHeader } from "@/components/layout/site-chrome";
-import { Reveal } from "@/components/layout/motion";
-import { Clients } from "@/features/company/clients";
-import { ClientProjects } from "@/features/company/client-projects";
+import { AnimatedContent } from "@/components/layout/motion";
+import { BrandMarquee } from "@/features/company/brand-marquee";
 import { Milestones } from "@/features/company/milestones";
 import { ConsultationSection } from "@/features/consultation/section";
 import { Hero } from "@/features/hero/hero";
@@ -14,10 +13,10 @@ export default function Home() {
   return (
     <>
       <SiteHeader />
-      <main id="main">
+      <AnimatedContent as="main" id="main" trigger="mount">
         <Hero />
-        <Clients />
-        <Reveal><WhyIntellismart /></Reveal>
+        <BrandMarquee kind="partners" />
+        <WhyIntellismart />
         <section id="products" tabIndex={-1} className="container solution-section" aria-labelledby="products-title">
           <div className="solution-heading">
             <p className="eyebrow">Solutions</p>
@@ -29,11 +28,11 @@ export default function Home() {
           </div>
           <ProductExplorer />
         </section>
-        <Reveal><Services /></Reveal>
+        <AnimatedContent><Services /></AnimatedContent>
         <Milestones />
-        <ClientProjects />
+        <BrandMarquee kind="clients" />
         <ConsultationSection />
-      </main>
+      </AnimatedContent>
       <SiteFooter />
     </>
   );

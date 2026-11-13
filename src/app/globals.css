@@ -56,6 +56,14 @@ h3 { font-size: 1.5rem; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
+  [data-animated-content="mount"], [data-animated-content="enter"] {
+    animation: animated-content 600ms cubic-bezier(.215, .61, .355, 1) var(--content-enter-delay, 0ms) backwards;
+  }
+  [data-animated-content="mount"] { --content-enter-distance: 10px; }
+  @keyframes animated-content {
+    from { opacity: .12; translate: 0 var(--content-enter-distance, 20px); }
+    to { opacity: 1; translate: 0 0; }
+  }
   .button, .icon-button, .desktop-nav a { transition: background-color 200ms ease-out, color 200ms ease-out; }
   .dialog-panel, .dialog-backdrop { transition: opacity 200ms ease-out, transform 200ms ease-out; }
   .dialog-panel[data-starting-style], .dialog-panel[data-ending-style] { opacity: 0; transform: translateY(6px); }

@@ -1,0 +1,107 @@
+.hr-mobile-hero-visual {
+  max-width: 980px;
+  margin-top: clamp(38px, 6vw, 76px);
+}
+.hr-mobile-phone-trio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.34fr) minmax(0, 1fr);
+  gap: clamp(14px, 5.6vw, 64px);
+  align-items: start;
+  padding: 12px clamp(10px, 3vw, 34px) 0;
+  max-height: clamp(200px, 42vw, 460px);
+  overflow: hidden;
+  perspective: 1350px;
+  perspective-origin: 50% 20%;
+}
+.hr-mobile-device {
+  min-width: 0;
+  padding: clamp(3px, .6vw, 8px);
+  border: 1px solid #9da7b4;
+  border-radius: clamp(15px, 3.5vw, 44px);
+  background: linear-gradient(140deg, #e6ecf2, #6d7888 26%, #151f2d 57%, #b6bfca);
+  box-shadow: 0 16px 34px #10234429;
+}
+.hr-mobile-device img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: clamp(11px, 2.9vw, 36px);
+}
+.hr-mobile-phone-trio > .hr-mobile-device {
+  position: relative;
+  transform-style: preserve-3d;
+}
+.hr-mobile-phone-trio > .hr-mobile-device::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid #727e8d;
+  background: linear-gradient(90deg, #66727e, #ecf0f4 10%, #9da8b5 21%, #dce2e8 80%, #788391);
+  transform: translateZ(-9px);
+}
+.hr-mobile-phone-trio > .hr-mobile-device::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 21%;
+  inset-inline-start: -3px;
+  width: 3px;
+  height: 12%;
+  border-radius: 4px;
+  background: linear-gradient(#697580, #e7edf3, #758291);
+}
+.hr-mobile-phone-trio > :first-child {
+  margin-top: 21%;
+  transform: rotateY(-13deg);
+  box-shadow: 4px 0 #8f9ba8, 7px 0 #bac4ce, 12px 17px 28px #1023443b;
+}
+.hr-mobile-phone-trio > :nth-child(2) {
+  transform: translateZ(0);
+  z-index: 1;
+  box-shadow: 0 4px #8f9ba8, 0 18px 42px #10234438;
+}
+.hr-mobile-phone-trio > :last-child {
+  margin-top: 21%;
+  transform: rotateY(13deg);
+  box-shadow: -4px 0 #8f9ba8, -7px 0 #bac4ce, -12px 17px 28px #1023443b;
+}
+.hr-mobile-phone-trio > :first-child::after { inset-inline: auto -8px; }
+.hr-mobile-screen {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: clamp(20px, 4vw, 46px) clamp(12px, 4vw, 48px);
+}
+.hr-mobile-screen .hr-mobile-device { width: min(100%, 260px); }
+.hr-mobile-screen .hr-mobile-device img { border-radius: clamp(11px, 2.9vw, 36px); }
+.hr-mobile-screen-callout {
+  position: absolute;
+  inset-inline-end: clamp(10px, 6%, 40px);
+  bottom: 19%;
+  width: min(48%, 260px);
+  overflow: hidden;
+  padding: 6px;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 14px 34px #10234430, 0 2px 5px #10234412;
+}
+.hr-mobile-screen-callout img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 9px;
+}
+.hr-mobile-screen-reverse .hr-mobile-screen-callout {
+  inset-inline-start: clamp(10px, 6%, 40px);
+  inset-inline-end: auto;
+  bottom: 24%;
+}
+@media (max-width: 520px) {
+  .hr-mobile-phone-trio { gap: 10px; perspective: 950px; }
+  .hr-mobile-phone-trio > :first-child { box-shadow: 4px 0 #9ba7b4; }
+  .hr-mobile-phone-trio > :last-child { box-shadow: -4px 0 #9ba7b4; }
+  .hr-mobile-screen:not(.hr-mobile-screen-reverse) { justify-items: start; }
+  .hr-mobile-screen-reverse { justify-items: end; }
+  .hr-mobile-screen .hr-mobile-device { width: min(72%, 235px); }
+}
