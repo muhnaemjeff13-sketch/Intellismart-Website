@@ -2,15 +2,14 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
-import { Dialog } from "@base-ui/react/dialog";
-import { ArrowLeft, ArrowRight, Plus, X } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { AnimatedContent } from "@/components/layout/motion";
 
 const innovation = [
-  { title: "Software roots", label: "Quezon City, Philippines", image: "office.jpg", alt: "Intellismart’s Philippine office building", body: "Intellismart began in Ontario in 2000 as a software development company. That foundation still informs how we build software around the needs of a business." },
-  { title: "Growing in the Philippines", label: "Quezon City, Philippines", image: "entrance.jpg", alt: "Entrance to Intellismart’s Philippine office", body: "We opened our first Philippine office in Quezon City in 2003. The move gave us a local team and a base from which to serve businesses in the Philippines." },
-  { title: "Integrating technology", label: "Systems integration", image: "conference.jpg", alt: "Conference room at Intellismart", body: "Our work expanded into systems integration. We bring software, equipment, and engineering together around each client’s operations." },
-  { title: "Supporting the rollout", label: "Training and local support", image: "interior.jpg", alt: "Interior of the Intellismart office", body: "We work with teams beyond implementation through user training and ongoing local support." },
+  { title: "Software roots", label: "Quezon City, Philippines", image: "office.jpg", alt: "Intellismart’s Philippine office building" },
+  { title: "Growing in the Philippines", label: "Quezon City, Philippines", image: "entrance.jpg", alt: "Entrance to Intellismart’s Philippine office" },
+  { title: "Integrating technology", label: "Systems integration", image: "conference.jpg", alt: "Conference room at Intellismart" },
+  { title: "Supporting the rollout", label: "Training and local support", image: "interior.jpg", alt: "Interior of the Intellismart office" },
 ];
 
 const milestones = [
@@ -43,6 +42,10 @@ export function InnovationCarousel() {
 
   return (
     <>
+      <div className="innovation-story">
+        <p>Intellismart Technology Inc. was established in Ontario, Canada, in the year 2000, beginning its business operations as a software development company. Recognizing the potential for growth, Intellismart expanded its operations to the Philippines in early 2003. This strategic move allowed the company to tap into new markets and leverage local talent.</p>
+        <p>Over the years, Intellismart has evolved and diversified its offerings, emerging as a leader in system integration and solutions innovation. Today, the company is recognized as one of the top choices for system integration, known for its partnerships with the best technology brands, proficiency in value-engineering and commitment to excellence. With a focus on delivering custom integrated solutions across various industries, Intellismart continues to set the standard for innovation and quality in the technology sector.</p>
+      </div>
       <ol ref={rail} id="innovation-rail" className="about-rail" tabIndex={0} aria-labelledby="innovation-rail-title"
         onScroll={event => {
           const { scrollLeft, scrollWidth, clientWidth } = event.currentTarget;
@@ -50,25 +53,11 @@ export function InnovationCarousel() {
         }}>
       {innovation.map(card => (
         <AnimatedContent as="li" key={card.title}>
-          <Dialog.Root>
-            <Dialog.Trigger className="innovation-card">
-              <Image src={"/media/about/" + card.image} alt="" fill sizes="(max-width: 600px) 76vw, 320px" />
+            <div className="innovation-card">
+              <Image src={"/media/about/" + card.image} alt={card.alt} fill sizes="(max-width: 600px) 76vw, 320px" />
               <span className="innovation-card-label">{card.label}</span>
               <span className="innovation-card-title">{card.title}</span>
-              <span className="innovation-card-open" aria-hidden="true"><Plus size={19} /></span>
-            </Dialog.Trigger>
-            <Dialog.Portal>
-              <Dialog.Backdrop className="dialog-backdrop" />
-              <Dialog.Popup className="dialog-panel innovation-dialog">
-                <Dialog.Close className="icon-button dialog-close" aria-label="Close innovation details"><X size={21} /></Dialog.Close>
-                <Dialog.Title className="dialog-title">{card.title}</Dialog.Title>
-                <Dialog.Description>{card.body}</Dialog.Description>
-                <div className="innovation-dialog-image">
-                  <Image src={"/media/about/" + card.image} alt={card.alt} fill sizes="(max-width: 600px) 90vw, 540px" />
-                </div>
-              </Dialog.Popup>
-            </Dialog.Portal>
-          </Dialog.Root>
+            </div>
         </AnimatedContent>
       ))}
       </ol>

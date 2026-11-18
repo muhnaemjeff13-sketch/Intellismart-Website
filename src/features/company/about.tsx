@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowDown, ArrowRight, Award, Compass, Handshake, HeartHandshake, Lightbulb, ShieldCheck, Target, UserRound, UsersRound } from "lucide-react";
+import { ArrowDown, ArrowRight, Award, Compass, Handshake, HeartHandshake, Lightbulb, ShieldCheck, Target, UsersRound } from "lucide-react";
 import { AwardsTimeline, InnovationCarousel, MilestoneTimeline } from "./about-rails";
 import { company } from "./data";
 
@@ -79,23 +79,19 @@ export function About() {
       <section className="container about-section" id="innovation" aria-labelledby="innovation-rail-title">
         <div className="section-intro">
           <h2 id="innovation-rail-title">Our innovation</h2>
-          <p>Explore how our work grew from building software to integrating and supporting complete systems.</p>
         </div>
         <InnovationCarousel />
       </section>
 
       <section id="ceo-message" className="container about-section" aria-labelledby="about-ceo-title">
         <div className="about-ceo">
-          <div className="about-ceo-portrait" aria-hidden="true">
-            <UserRound size={120} strokeWidth={1} />
-          </div>
+          <header className="about-ceo-heading">
+            <h2 id="about-ceo-title">A message from our CEO</h2>
+          </header>
           <div className="about-ceo-copy">
-            <div>
-              <h2 id="about-ceo-title">A message from our CEO</h2>
               <blockquote className="about-ceo-message">
                 {company.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
               </blockquote>
-            </div>
             <p className="about-ceo-attribution"><strong>Mr. Gerry Sy</strong><br />Chief Executive Officer</p>
           </div>
         </div>
