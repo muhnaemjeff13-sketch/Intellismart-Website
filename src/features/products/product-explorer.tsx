@@ -138,6 +138,11 @@ export function ProductExplorer() {
 
     function settle() {
       window.clearTimeout(settleTimer);
+      if (!window.matchMedia("(min-width: 900px)").matches) {
+        scrollStart = undefined;
+        snapping = false;
+        return;
+      }
       if (touching) return;
       if (snapping) {
         snapping = false;
