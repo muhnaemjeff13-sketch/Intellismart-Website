@@ -54,6 +54,33 @@ export const simsOverview = {
   height: 738,
 };
 
+export const hrAnalyticsOverview = {
+  href: "/solutions/hrdotnet-analytics",
+  heroId: "hr-analytics-hero",
+  preview: "/media/solutions/hrdotnet-analytics/dashboard.webp",
+  previewAlt: "HRDotNet Analytics workforce dashboard with employee totals, headcount, hiring, separation, and attrition trends",
+  width: 1668,
+  height: 552,
+};
+
+export const hrPerformanceOverview = {
+  href: "/solutions/hrdotnet-performance",
+  heroId: "hr-performance-hero",
+  preview: "/media/solutions/hrdotnet-performance/dashboard.webp",
+  previewAlt: "HRDotNet Performance dashboard with review totals, completion status, and accomplishment verification",
+  width: 1265,
+  height: 745,
+};
+
+export const hrAIOverview = {
+  href: "/solutions/hrdotnet-ai",
+  heroId: "hr-ai-hero",
+  preview: "/media/solutions/hrdotnet-ai/welcome.webp",
+  previewAlt: "HRDotNet Ask AI welcome screen with suggestions for policy, leave history, overtime, and attendance questions",
+  width: 1530,
+  height: 951,
+};
+
 export const products = [
   {
     "id": "hr-core",

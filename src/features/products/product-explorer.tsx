@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { booksOverview, cashBoxOverview, hrCoreOverview, hrMobileOverview, hrMobileScreens, hrRecruitmentOverview, products, simsOverview } from "./data";
+import { booksOverview, cashBoxOverview, hrCoreOverview, hrMobileOverview, hrMobileScreens, hrRecruitmentOverview, products, simsOverview, hrAnalyticsOverview, hrPerformanceOverview, hrAIOverview } from "./data";
 
 type Product = (typeof products)[number];
 
@@ -37,7 +37,7 @@ const screenshotDimensions: Record<string, readonly [number, number]> = {
 };
 
 function ProjectPreview({ product, desktop = false, active = true }: { product: Product; desktop?: boolean; active?: boolean }) {
-  const dashboardOverview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : product.id === "books" ? booksOverview : product.id === "sims" ? simsOverview : undefined;
+  const dashboardOverview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : product.id === "books" ? booksOverview : product.id === "sims" ? simsOverview : product.id === "hr-analytics" ? hrAnalyticsOverview : product.id === "hr-performance" ? hrPerformanceOverview : product.id === "hr-ai" ? hrAIOverview : undefined;
   const isMobile = product.id === "hr-mobile";
   const isAnalytics = product.id === "hr-analytics";
   const [width, height] = dashboardOverview
@@ -261,7 +261,7 @@ export function ProductExplorer() {
       <div className="solution-catalog">
         <div className="solution-projects" ref={list}>
           {products.map((product, index) => {
-            const overview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-mobile" ? hrMobileOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : product.id === "books" ? booksOverview : product.id === "sims" ? simsOverview : undefined;
+            const overview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-mobile" ? hrMobileOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : product.id === "books" ? booksOverview : product.id === "sims" ? simsOverview : product.id === "hr-analytics" ? hrAnalyticsOverview : product.id === "hr-performance" ? hrPerformanceOverview : product.id === "hr-ai" ? hrAIOverview : undefined;
             return (
               <article key={product.id} id={"solution-" + product.id} className="solution-project" tabIndex={-1} data-focused={index === active} aria-labelledby={"title-" + product.id}>
                 <ProjectPreview product={product} />
