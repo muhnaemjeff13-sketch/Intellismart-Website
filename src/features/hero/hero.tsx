@@ -4,7 +4,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCarousel, useReducedMotion } from "@/components/layout/motion";
-import { cashBoxOverview, hrCoreOverview, hrRecruitmentOverview, products } from "@/features/products/data";
+import { cashBoxOverview, hrCoreOverview, hrRecruitmentOverview, products, simsOverview } from "@/features/products/data";
 
 const overviewHeadline = "Software Shaped Around your Business";
 const peopleHeadline = "Simplify HR, Timekeeping and Payroll";
@@ -112,7 +112,7 @@ export function Hero() {
               const middle = Math.floor(count / 2);
               const offset = (index - previewIndex + middle + count) % count - middle;
               const depth = Math.abs(offset);
-              const overview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : undefined;
+              const overview = product.id === "hr-core" ? hrCoreOverview : product.id === "hr-recruitment" ? hrRecruitmentOverview : product.id === "cashbox" ? cashBoxOverview : product.id === "sims" ? simsOverview : undefined;
               return (
                 <div className="preview-slide" key={product.id} data-depth={depth} aria-hidden={depth > 0}
                   style={{ "--slide-offset": offset,

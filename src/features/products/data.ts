@@ -45,6 +45,15 @@ export const booksOverview = {
   height: 491,
 };
 
+export const simsOverview = {
+  href: "/solutions/simsdotnet",
+  heroId: "sims-hero",
+  preview: "/media/solutions/simsdotnet/dashboard.webp",
+  previewAlt: "SIMSDotNet dashboard showing sales, purchases, collections, payments, and movement charts",
+  width: 1516,
+  height: 738,
+};
+
 export const products = [
   {
     "id": "hr-core",
